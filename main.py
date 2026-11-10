@@ -1,4 +1,5 @@
 import random
+from termcolor import colored, cprint
 
 from grille import Grille
 from bateau import porte_avion, torpilleur, croiseur, sous_marin
@@ -64,7 +65,7 @@ while bateaux_restants:
     # print("_______________")
 
     print(grille_visible)
-    print("\n🤠 Veuillez renseigner les coordonnées du tir")
+    print("\n🤠 Veuillez renseigner les coordonnées du tir", attrs=["bold"])
     
     try:
         ligne = int(input("Numéro de ligne : "))
@@ -72,17 +73,19 @@ while bateaux_restants:
         assert 0 < ligne <= 8 and 0 < colonne <= 10
 
     except AssertionError:
-        print("​​\n​​⚠️​ La grille est de taille 8x10 ! Réessayez")
+        cprint("​​\n​​⚠️​  La grille est de taille 8x10 ! Réessayez", "yellow")
         continue
     except ValueError:
-        print("​​\n​​⚠️​ Veuillez entrer un nombre !")
+        cprint("​​\n​​⚠️​  Veuillez entrer un nombre !", "yellow")
         continue
 
     ligne -= 1
     colonne -= 1
 
     if grille_visible.matrice[ligne * grille_visible.nb_colonnes + colonne] != grille_visible.vide:
-        print("🫤​ Vous avez déjà tiré ici !")
+        print("_______________\n")
+
+        cprint("🫤​  Vous avez déjà tiré ici !", "yellow")
         continue
 
     nb_tirs += 1
@@ -96,7 +99,7 @@ while bateaux_restants:
     
     if bateau_touche is False:
         grille_visible.tirer(ligne, colonne)
-        print("​💦​ Tir dans l'eau")
+        cprint("​💦​ Tir dans l'eau", "blue")
     else:
         grille_jeu.tirer(ligne, colonne, "💣")
         grille_visible.tirer(ligne, colonne, "💣")
@@ -106,15 +109,15 @@ while bateaux_restants:
             bateaux_restants.remove(bateau_touche)
 
             if isinstance(bateau_touche, porte_avion):
-                print("​🔥​ Le porte-avions ne porte plus d'avions !")
+                cprint("🔥 Le porte-avions ne porte plus d'avions !", "red", attrs=["bold"])
             elif isinstance(bateau_touche, croiseur):
-                print("​🔥​ Le croiseur est coulé !")
+                cprint("​🔥​ Le croiseur est coulé !", "red", attrs=["bold"])
             elif isinstance(bateau_touche, torpilleur):
-                print("​🔥​ Le torpilleur torpillé !")
+                cprint("​🔥​ Le torpilleur torpillé !", "red", attrs=["bold"])
             elif isinstance(bateau_touche, sous_marin):
-                print("​🔥​ Le sous-marin repose au fond de l'océan !")
+                cprint("​🔥​ Le sous-marin repose au fond de l'océan !", "red", attrs=["bold"])
         else:
-            print("💥 Touché ! 💥")
+            cprint("💥 Touché ! 💥", "red", attrs=["bold"])
 
 print(grille_visible)
-print(f"Bravo, tous les bateaux sont coulés en {nb_tirs} coups !")
+cprint(f"Bravo, tous les bateaux sont coulés en {nb_tirs} coups !", "green", attrs=["bold"])
