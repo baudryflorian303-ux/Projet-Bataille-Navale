@@ -19,4 +19,4 @@ python main.py
 ## Auteur
 
 Florian BAUDRY
-École Centrale Méditerannée
+- École Centrale Méditerranée
