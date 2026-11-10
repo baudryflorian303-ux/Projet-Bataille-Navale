@@ -65,7 +65,7 @@ while bateaux_restants:
     # print("_______________")
 
     print(grille_visible)
-    print("\n🤠 Veuillez renseigner les coordonnées du tir", attrs=["bold"])
+    cprint("\n🤠 Veuillez renseigner les coordonnées du tir", attrs=["bold"])
     
     try:
         ligne = int(input("Numéro de ligne : "))
